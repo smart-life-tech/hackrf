@@ -1,0 +1,55 @@
+# GNSS Simulator Configuration File
+
+# GNSS Signal Generation Settings
+gnss:
+  data_directory: "/home/pi/gnss-data"
+  gps_sdr_sim_path: "/home/pi/gps-sdr-sim/gps-sdr-sim"
+  ephemeris_update_interval: 1800  # seconds (30 minutes)
+  max_data_age: 14400              # seconds (4 hours)
+
+# HackRF SDR Configuration
+hackrf:
+  frequency: 1575420000      # L1 band frequency (Hz)
+  sample_rate: 2600000       # Sample rate (Hz)
+  tx_gain: 40                # TX gain (0-47)
+  power_level: 1             # Signal power level (0-1)
+  
+# Default Signal Parameters
+signal:
+  default_duration: 300      # Default transmission duration (seconds)
+  max_duration: 3600         # Maximum allowed duration (seconds)
+  elevation_mask: 5.0        # Minimum satellite elevation (degrees)
+  
+# API Server Configuration
+api:
+  host: "0.0.0.0"
+  port: 8000
+  api_key: "gnss-simulator-key-2024"  # Change this for production!
+  enable_cors: true
+  request_timeout: 60
+
+# Logging Configuration
+logging:
+  level: "INFO"              # DEBUG, INFO, WARNING, ERROR
+  file: "/home/pi/gnss-simulator/logs/gnss-simulator.log"
+  max_file_size: "10MB"
+  backup_count: 5
+
+# System Optimization
+system:
+  enable_performance_mode: true
+  usb_memory_mb: 1000
+  real_time_priority: false
+
+# Location Validation
+location:
+  coordinate_precision: 6    # Decimal places for coordinates
+  altitude_range:
+    min: -1000               # Minimum altitude (meters)
+    max: 100000              # Maximum altitude (meters)
+
+# Development Settings
+development:
+  debug_mode: false
+  signal_validation: true
+  save_generated_signals: false
