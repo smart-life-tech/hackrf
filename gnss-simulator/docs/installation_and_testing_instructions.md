@@ -82,9 +82,9 @@ To run the test command using the config file:
 ```bash
 python3 src/main.py test --config-file config.json
 ```
-
+![image](image.png)
 ```bash
-   ![image](image.png)
+   
    python validation/signal_validator.py comprehensive --file output/gpssim.bin --duration 60
   ```
 
