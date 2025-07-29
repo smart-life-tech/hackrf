@@ -142,7 +142,7 @@ class GNSSSignalGenerator:
                 return None
 
             # Decompress using 'uncompress' for .Z files
-            decompress_cmd = ['uncompress', str(compressed_file)]
+            decompress_cmd = ['uncompress', str('/home/erez/gnss-data/brdc1800.25n.Z')]
             result = subprocess.run(decompress_cmd, capture_output=True, text=True, timeout=30)
 
             if result.returncode != 0:
