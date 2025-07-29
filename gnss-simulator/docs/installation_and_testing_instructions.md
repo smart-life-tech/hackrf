@@ -55,14 +55,46 @@
 
 ---
 
+## Using Configuration File for Signal Generation
+
+You can now use a JSON configuration file to specify signal generation parameters instead of command-line arguments.
+
+Example config file (`config.json`):
+
+```json
+{
+  "signal": {
+    "location": [51.5074, -0.1278, 100],
+    "duration": 60,
+    "gain": 30
+  },
+  "data": {
+    "rinex_directory": "/home/erez/gnss-data",
+    "rinex_filename": "brdc1800.25n"
+  }
+}
+```
+
+### Running with Config File
+
+To run the test command using the config file:
+
+```bash
+python3 src/main.py test --config-file config.json
+```
+
+The parameters in the config file will override command-line arguments for location, duration, and gain.
+
+---
+
 ## Testing and Validation
 
 ### Milestone 1: Core GNSS Signal Generation (Fixed Position)
 
-- Run the test command with desired latitude, longitude, and duration:
+- Run the test command with config file or command-line parameters:
 
   ```bash
-  python3 src/main.py test --lat 51.5074 --lon -0.1278 --duration 300
+  python3 src/main.py test --config-file config.json
   ```
 
 - Confirm console output shows signal transmission started and runs for the specified duration.
@@ -83,7 +115,7 @@
 - Generate GNSS signal file without transmission:
 
   ```bash
-  python3 src/main.py generate --lat 40.7128 --lon -74.0060 --duration 300
+  python3 src/main.py generate --config-file config.json
   ```
 
 - Confirm the output path of the generated signal file.
@@ -115,4 +147,4 @@
 
 ---
 
-This completes the installation and testing instructions for the GNSS Simulator project.
+This completes the updated installation and testing instructions for the GNSS Simulator project.
