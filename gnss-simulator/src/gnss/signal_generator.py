@@ -142,7 +142,7 @@ class GNSSSignalGenerator:
                 return None
                 
             # Decompress file
-            decompress_cmd = ['gunzip', str(compressed_file)]
+            decompress_cmd = ['uncompress', str(compressed_file)]
             result = subprocess.run(decompress_cmd, capture_output=True, text=True, timeout=30)
             
             if result.returncode != 0:
