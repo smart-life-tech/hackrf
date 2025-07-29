@@ -99,6 +99,44 @@ The parameters in the config file will override command-line arguments for locat
 
 - Confirm console output shows signal transmission started and runs for the specified duration.
 - Use a GPS test app on Android or iPhone to verify:
+ - ANDROID
+   [GPSTest](https://play.google.com/store/apps/details?id=com.android.gpstest)
+   [GPS Status & Toolbox](https://play.google.com/store/apps/details?id=com.eclipsimgpsstatus2)
+ - IPHONE
+
+   ```
+   For iPhone (iOS)
+   iPhones are more restrictive, but we can still test:
+   ```
+   [GNSS View](https://apps.apple.com/us/app/gnss-view/id1470130467)
+
+   Satellite info, fix status, sky view
+
+   [SpySat GPS Tracker](https://apps.apple.com/us/app/spysat-gps-tracker/id959903289)
+   ```
+   Logs GPS position over time
+
+   Works well when testing dynamic simulations
+
+   🛑 iOS doesn’t allow full GPS spoofing via USB or RF easily — you’ll need to use a real GNSS receiver connected to the spoofed signal (see below).
+
+   ✅ For Hardware Receivers
+   If you're testing with HackRF or another SDR device, you can connect:
+
+   USB GPS dongles (like the u-blox 7/8/9)
+
+   Raspberry Pi with GPS HAT
+
+   Dedicated GNSS receivers (like SparkFun SAM-M8Q or Adafruit Ultimate GPS)
+
+   These should receive the simulated signal if:
+
+   They're within range of the HackRF’s RF transmission (or connected via cable + attenuator)
+
+   Configured for GPS L1 (1575.42 MHz)
+
+   You can log and visualize data with:
+   ```
   - Map position
   - Satellites visible
   - Date and time
