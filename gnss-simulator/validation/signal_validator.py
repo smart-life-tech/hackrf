@@ -319,7 +319,7 @@ class GNSSSignalValidator:
         
         # Test 3: GNSS data availability
         data_dir = Path('/home/erez/gnss-data')
-        nav_files = list(data_dir.glob('*.n')) + list(data_dir.glob('*.nav'))
+        nav_files = list(data_dir.glob('*.25n')) + list(data_dir.glob('*.nav'))
         gnss_data_available = len(nav_files) > 0
         test_results['tests']['gnss_data'] = {
             'passed': gnss_data_available,

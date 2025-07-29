@@ -167,7 +167,7 @@ class TestIntegration:
         # Look for navigation files
         nav_files = []
         for file in os.listdir(data_dir):
-            if file.endswith('.n') or file.endswith('.nav'):
+            if file.endswith('.25n') or file.endswith('.nav'):
                 nav_files.append(file)
                 
         assert len(nav_files) > 0, "No GNSS navigation files found"
