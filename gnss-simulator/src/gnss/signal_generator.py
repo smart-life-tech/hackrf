@@ -132,29 +132,31 @@ class GNSSSignalGenerator:
             compressed_file = self.config_dir / f"{filename}.Z"
             
             self.logger.info(f"Downloading ephemeris data from {url}")
-            
-            # Download compressed file
+
+            # Download compressed file (.Z format)
             download_cmd = ['wget', '-O', str(compressed_file), url]
             result = subprocess.run(download_cmd, capture_output=True, text=True, timeout=60)
-            
+
             if result.returncode != 0:
                 self.logger.error(f"Download failed: {result.stderr}")
                 return None
-                
-            # Decompress file
+
+            # Decompress using 'uncompress' for .Z files
             decompress_cmd = ['uncompress', str(compressed_file)]
             result = subprocess.run(decompress_cmd, capture_output=True, text=True, timeout=30)
-            
+
             if result.returncode != 0:
                 self.logger.error(f"Decompression failed: {result.stderr}")
                 return None
-                
+
+            # Check if decompressed file exists
             if output_file.exists():
                 self.logger.info(f"Successfully downloaded: {output_file}")
                 return str(output_file)
             else:
                 self.logger.error("Downloaded file not found after decompression")
                 return None
+
                 
         except Exception as e:
             self.logger.error(f"Error downloading ephemeris: {e}")
