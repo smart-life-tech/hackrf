@@ -154,62 +154,63 @@ class GNSSSignalValidator:
             
     def test_hackrf_transmission(self, duration: int = 10) -> Tuple[bool, str]:
         """
-        Test HackRF transmission capability
-        
+        Test HackRF transmission capability using a 1 kHz test tone.
+
         Args:
-            duration: Test duration in seconds
-            
+            duration: Duration of test transmission in seconds
+
         Returns:
             Tuple of (success, message)
         """
         try:
-            # Create a simple test signal
+            sample_rate = 2600000
+            frequency = 1000  # 1 kHz tone
+            samples = int(sample_rate * duration)
+
+            # Create time vector
+            t = np.arange(samples) / sample_rate
+
+            # Generate I/Q signal (interleaved int8)
+            tone = 0.5 * np.exp(1j * 2 * np.pi * frequency * t)  # Complex sinusoid
+
+            i = (np.real(tone) * 127).astype(np.int8)
+            q = (np.imag(tone) * 127).astype(np.int8)
+
+            iq = np.empty(2 * samples, dtype=np.int8)
+            iq[0::2] = i
+            iq[1::2] = q
+
             with tempfile.NamedTemporaryFile(suffix='.bin', delete=False) as f:
                 test_signal_file = f.name
-                
-            # Generate a simple test tone (1 kHz)
-            sample_rate = 2600000
-            samples = int(sample_rate * duration)
-            t = np.linspace(0, duration, samples)
-            test_signal = np.exp(1j * 2 * np.pi * 1000 * t) * 32767  # 1 kHz tone
-            
-            # Convert to int32 I/Q format
-            i_samples = np.real(test_signal).astype(np.int32)
-            q_samples = np.imag(test_signal).astype(np.int32)
-            iq_samples = np.empty(2 * len(i_samples), dtype=np.int32)
-            iq_samples[::2] = i_samples
-            iq_samples[1::2] = q_samples
-            
-            # Write test signal file
-            with open(test_signal_file, 'wb') as f:
-                f.write(iq_samples.tobytes())
-                
-            # Test transmission
+                f.write(iq.tobytes())
+
+            # Build HackRF transfer command
             cmd = [
                 'hackrf_transfer',
                 '-t', test_signal_file,
-                '-f', '1575420000',
+                '-f', '1575420000',  # GPS L1 center freq
                 '-s', str(sample_rate),
                 '-a', '1',
-                '-x', '20'  # Lower gain for testing
+                '-x', '20',
+                '-n', str(2 * samples)  # Number of I+Q bytes
             ]
-            
+
             self.logger.info(f"Testing HackRF transmission: {' '.join(cmd)}")
-            
+
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=duration + 10)
-            
-            # Clean up test file
+
             os.unlink(test_signal_file)
-            
+
             if result.returncode == 0:
                 return True, "HackRF transmission test successful"
             else:
-                return False, f"HackRF transmission test failed: {result.stderr}"
-                
+                return False, f"HackRF transmission failed: {result.stderr.strip()}"
+
         except subprocess.TimeoutExpired:
             return False, "HackRF transmission test timeout"
         except Exception as e:
             return False, f"HackRF transmission test error: {str(e)}"
+
             
     def monitor_transmission(self, duration: int = 30) -> Dict[str, Any]:
         """
