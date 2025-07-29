@@ -38,13 +38,13 @@ sudo apt install -y gnuradio gnuradio-dev gr-osmosdr liblog4cpp5-dev
 
 # Create directories
 echo "Creating directories..."
-mkdir -p /home/pi/gnss-data
-mkdir -p /home/pi/gnss-simulator/logs
+mkdir -p /home/erez/gnss-data
+mkdir -p /home/erez/gnss-simulator/logs
 
 # Clone and build GPS-SDR-SIM
 echo "Installing GPS-SDR-SIM..."
-if [ ! -d "/home/pi/gps-sdr-sim" ]; then
-    cd /home/pi
+if [ ! -d "/home/erez/gps-sdr-sim" ]; then
+    cd /home/erez
     git clone https://github.com/osqzss/gps-sdr-sim.git
     cd gps-sdr-sim
     gcc -O3 -o gps-sdr-sim gpssim.c -lm
@@ -74,7 +74,7 @@ pip3 install --user -r requirements.txt
 
 # Download sample GNSS data
 echo "Downloading sample GNSS data..."
-cd /home/pi/gnss-data
+cd /home/erez/gnss-data
 if [ ! -f "brdc3540.14n" ]; then
     wget -q https://raw.githubusercontent.com/osqzss/gps-sdr-sim/master/brdc3540.14n
     echo "Sample GNSS data downloaded"
@@ -82,11 +82,11 @@ fi
 
 # Create configuration file
 echo "Creating configuration..."
-cat > /home/pi/gnss-simulator/config.yaml <<EOF
+cat > /home/erez/gnss-simulator/config.yaml <<EOF
 # GNSS Simulator Configuration
 gnss:
-  data_directory: "/home/pi/gnss-data"
-  gps_sdr_sim_path: "/home/pi/gps-sdr-sim/gps-sdr-sim"
+  data_directory: "/home/erez/gnss-data"
+  gps_sdr_sim_path: "/home/erez/gps-sdr-sim/gps-sdr-sim"
   
 hackrf:
   frequency: 1575420000  # L1 band
@@ -101,7 +101,7 @@ api:
 
 logging:
   level: "INFO"
-  file: "/home/pi/gnss-simulator/logs/gnss-simulator.log"
+  file: "/home/erez/gnss-simulator/logs/gnss-simulator.log"
 EOF
 
 # Create systemd service (optional)
@@ -113,8 +113,8 @@ After=network.target
 
 [Service]
 Type=simple
-User=pi
-WorkingDirectory=/home/pi/gnss-simulator
+User=erez
+WorkingDirectory=/home/erez/gnss-simulator
 ExecStart=/usr/bin/python3 src/main.py server
 Restart=always
 RestartSec=10
@@ -154,7 +154,7 @@ fi
 echo "Creating helper scripts..."
 
 # Test script
-cat > /home/pi/gnss-simulator/test-system.sh <<'EOF'
+cat > /home/erez/gnss-simulator/test-system.sh <<'EOF'
 #!/bin/bash
 echo "=== GNSS Simulator System Test ==="
 
@@ -166,21 +166,21 @@ else
 fi
 
 echo "2. Testing GPS-SDR-SIM..."
-if [ -x "/home/pi/gps-sdr-sim/gps-sdr-sim" ]; then
+if [ -x "/home/erez/gps-sdr-sim/gps-sdr-sim" ]; then
     echo "✓ GPS-SDR-SIM available"
 else
     echo "✗ GPS-SDR-SIM not found"
 fi
 
 echo "3. Testing GNSS data..."
-if ls /home/pi/gnss-data/*.n > /dev/null 2>&1; then
+if ls /home/erez/gnss-data/*.n > /dev/null 2>&1; then
     echo "✓ GNSS data available"
 else
     echo "✗ GNSS data missing"
 fi
 
 echo "4. Testing Python dependencies..."
-cd /home/pi/gnss-simulator
+cd /home/erez/gnss-simulator
 if python3 -c "import fastapi, uvicorn; print('✓ Python dependencies OK')"; then
     true
 else
@@ -195,10 +195,10 @@ echo "   Disk: $(df -h / | awk 'NR==2{print $5}')"
 echo "=== Test Complete ==="
 EOF
 
-chmod +x /home/pi/gnss-simulator/test-system.sh
+chmod +x /home/erez/gnss-simulator/test-system.sh
 
 # Quick start script
-cat > /home/pi/gnss-simulator/quick-start.sh <<'EOF'
+cat > /home/erez/gnss-simulator/quick-start.sh <<'EOF'
 #!/bin/bash
 # Quick start script for GNSS simulator
 
@@ -211,11 +211,11 @@ echo "Test complete. To start API server:"
 echo "python3 src/main.py server"
 EOF
 
-chmod +x /home/pi/gnss-simulator/quick-start.sh
+chmod +x /home/erez/gnss-simulator/quick-start.sh
 
 # Set permissions
-sudo chown -R pi:pi /home/pi/gnss-simulator
-sudo chown -R pi:pi /home/pi/gnss-data
+sudo chown -R erez:erez /home/erez/gnss-simulator
+sudo chown -R erez:erez /home/erez/gnss-data
 
 echo "======================================"
 echo "Installation Complete!"
