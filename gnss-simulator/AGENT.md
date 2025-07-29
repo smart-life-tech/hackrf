@@ -60,10 +60,10 @@ curl -X POST http://localhost:8000/api/v1/stop \
 hackrf_info
 
 # Test GPS-SDR-SIM
-/home/pi/gps-sdr-sim/gps-sdr-sim
+/home/erez/gps-sdr-sim/gps-sdr-sim
 
 # Check GNSS data files
-ls -la /home/pi/gnss-data/
+ls -la /home/erez/gnss-data/
 
 # Monitor system resources
 htop
@@ -208,7 +208,7 @@ pytest tests/ --cov=src --cov-report=html
 
 ### Signal Generation Fails
 1. Check GPS-SDR-SIM binary exists and is executable
-2. Verify GNSS data files exist in /home/pi/gnss-data/
+2. Verify GNSS data files exist in /home/erez/gnss-data/
 3. Check available disk space
 4. Review log files for specific errors
 

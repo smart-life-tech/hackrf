@@ -310,7 +310,7 @@ class GNSSSignalValidator:
             }
             
         # Test 2: GPS-SDR-SIM availability
-        gps_sdr_sim_path = Path('/home/pi/gps-sdr-sim/gps-sdr-sim')
+        gps_sdr_sim_path = Path('/home/erez/gps-sdr-sim/gps-sdr-sim')
         gps_sdr_sim_available = gps_sdr_sim_path.exists() and gps_sdr_sim_path.is_file()
         test_results['tests']['gps_sdr_sim'] = {
             'passed': gps_sdr_sim_available,
@@ -318,7 +318,7 @@ class GNSSSignalValidator:
         }
         
         # Test 3: GNSS data availability
-        data_dir = Path('/home/pi/gnss-data')
+        data_dir = Path('/home/erez/gnss-data')
         nav_files = list(data_dir.glob('*.n')) + list(data_dir.glob('*.nav'))
         gnss_data_available = len(nav_files) > 0
         test_results['tests']['gnss_data'] = {

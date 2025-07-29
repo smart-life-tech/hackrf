@@ -86,12 +86,26 @@ Examples:
     parser.add_argument('--gps-sdr-sim', default='/home/erez/gps-sdr-sim/gps-sdr-sim', help='GPS-SDR-SIM executable path')
     parser.add_argument('--log-level', choices=['DEBUG', 'INFO', 'WARNING', 'ERROR'], default='INFO', help='Log level')
     parser.add_argument('--log-file', help='Log file path (default: console only)')
+    parser.add_argument('--config-file', type=str, help='Path to JSON config file for signal generation')
     
     args = parser.parse_args()
     
     # Setup logging
     setup_logging(args.log_level, args.log_file)
     logger = logging.getLogger(__name__)
+    
+    import json
+    
+    # Load config file if provided
+    config_data = None
+    if args.config_file:
+        try:
+            with open(args.config_file, 'r') as f:
+                config_data = json.load(f)
+            logger.info(f"Loaded configuration from {args.config_file}")
+        except Exception as e:
+            logger.error(f"Failed to load config file: {e}")
+            sys.exit(1)
     
     try:
         # Initialize signal generator
@@ -111,22 +125,37 @@ Examples:
                 
         elif args.command == 'test':
             # Test signal generation and transmission
-            if args.lat is None or args.lon is None:
-                parser.error("--lat and --lon are required for test command")
-                
+            
+            # If config file provided, override parameters
+            if config_data and 'signal' in config_data:
+                loc = config_data['signal'].get('location', None)
+                duration = config_data['signal'].get('duration', args.duration)
+                gain = config_data['signal'].get('gain', args.tx_gain)
+                if loc and len(loc) == 3:
+                    latitude, longitude, altitude = loc
+                else:
+                    latitude, longitude, altitude = args.lat, args.lon, args.alt
+            else:
+                latitude, longitude, altitude = args.lat, args.lon, args.alt
+                duration = args.duration
+                gain = args.tx_gain
+            
+            if latitude is None or longitude is None:
+                parser.error("--lat and --lon are required for test command if not provided in config file")
+            
             config = GNSSConfig(
-                latitude=args.lat,
-                longitude=args.lon,
-                altitude=args.alt,
-                duration=args.duration,
+                latitude=latitude,
+                longitude=longitude,
+                altitude=altitude,
+                duration=duration,
                 frequency=args.frequency,
                 sample_rate=args.sample_rate,
-                tx_gain=args.tx_gain
+                tx_gain=gain
             )
             
             print(f"Testing GNSS signal transmission")
-            print(f"Location: {args.lat}, {args.lon}, {args.alt}m")
-            print(f"Duration: {args.duration} seconds")
+            print(f"Location: {latitude}, {longitude}, {altitude}m")
+            print(f"Duration: {duration} seconds")
             print("=" * 40)
             
             if generator.start_transmission(config):
@@ -137,12 +166,12 @@ Examples:
                 try:
                     # Monitor transmission
                     start_time = time.time()
-                    while generator.is_transmitting and (time.time() - start_time) < args.duration:
+                    while generator.is_transmitting and (time.time() - start_time) < duration:
                         print(f"Transmitting... {int(time.time() - start_time)}s elapsed", end='\r')
                         time.sleep(1)
                         
                     generator.stop_transmission()
-                    print(f"\n✓ Transmission completed ({args.duration}s)")
+                    print(f"\n✓ Transmission completed ({duration}s)")
                     
                 except KeyboardInterrupt:
                     print("\nStopping transmission...")
@@ -154,19 +183,32 @@ Examples:
                 
         elif args.command == 'generate':
             # Generate signal file only (no transmission)
-            if args.lat is None or args.lon is None:
-                parser.error("--lat and --lon are required for generate command")
-                
+            
+            # If config file provided, override parameters
+            if config_data and 'signal' in config_data:
+                loc = config_data['signal'].get('location', None)
+                duration = config_data['signal'].get('duration', args.duration)
+                if loc and len(loc) == 3:
+                    latitude, longitude, altitude = loc
+                else:
+                    latitude, longitude, altitude = args.lat, args.lon, args.alt
+            else:
+                latitude, longitude, altitude = args.lat, args.lon, args.alt
+                duration = args.duration
+            
+            if latitude is None or longitude is None:
+                parser.error("--lat and --lon are required for generate command if not provided in config file")
+            
             config = GNSSConfig(
-                latitude=args.lat,
-                longitude=args.lon,
-                altitude=args.alt,
-                duration=args.duration
+                latitude=latitude,
+                longitude=longitude,
+                altitude=altitude,
+                duration=duration
             )
             
             print(f"Generating GNSS signal file")
-            print(f"Location: {args.lat}, {args.lon}, {args.alt}m")
-            print(f"Duration: {args.duration} seconds")
+            print(f"Location: {latitude}, {longitude}, {altitude}m")
+            print(f"Duration: {duration} seconds")
             
             success, result = generator.generate_signal_file(config)
             if success:

@@ -74,7 +74,7 @@ class ConstellationManager:
     and advanced satellite visibility calculation for laboratory GNSS simulation.
     """
     
-    def __init__(self, data_directory: str = "/home/pi/gnss-data"):
+    def __init__(self, data_directory: str = "/home/erez/gnss-data"):
         """
         Initialize constellation manager
         

@@ -154,14 +154,14 @@ class TestIntegration:
             
     def test_gps_sdr_sim_availability(self):
         """Test GPS-SDR-SIM availability"""
-        gps_sdr_sim_path = "/home/pi/gps-sdr-sim/gps-sdr-sim"
+        gps_sdr_sim_path = "/home/erez/gps-sdr-sim/gps-sdr-sim"
         assert os.path.exists(gps_sdr_sim_path), "GPS-SDR-SIM not found"
         assert os.access(gps_sdr_sim_path, os.X_OK), "GPS-SDR-SIM not executable"
         self.logger.info("✓ GPS-SDR-SIM available")
         
     def test_gnss_data_availability(self):
         """Test GNSS navigation data availability"""
-        data_dir = "/home/pi/gnss-data"
+        data_dir = "/home/erez/gnss-data"
         assert os.path.exists(data_dir), "GNSS data directory not found"
         
         # Look for navigation files
