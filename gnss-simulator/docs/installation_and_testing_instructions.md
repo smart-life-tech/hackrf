@@ -83,18 +83,30 @@ To run the test command using the config file:
 python3 src/main.py test --config-file config.json
 ```
 
-The parameters in the config file will override command-line arguments for location, duration, and gain.
+```bash
+   ![image](image.png)
+   python validation/signal_validator.py comprehensive --file output/gpssim.bin --duration 60
+  ```
 
----
 
-## Testing and Validation
+   ## Testing and Validation
 
-### Milestone 1: Core GNSS Signal Generation (Fixed Position)
+   ### Milestone 1: Core GNSS Signal Generation (Fixed Position)
 
-- Run the test command with config file or command-line parameters:
+   - Run the test command with config file or command-line parameters:
+   ![transmitting](<Screenshot (466).png>)
+```bash
+   ✅ Manual Transmission: Success
+   Your manual hackrf_transfer command transmitted successfully:
+   hackrf_transfer -t output/gpssim.bin -f 1575420000 -s 2600000 -a 1 -x 20
+   Output confirms:
+   Streaming at ~5.2 MiB/sec
+   Average power ~–4.7 dBfs
+   No HackRF errors
+   ```
 
-  ```bash
-  python3 src/main.py test --config-file config.json
+```bash
+    python3 src/main.py test --config-file config.json
   ```
 
 - Confirm console output shows signal transmission started and runs for the specified duration.
@@ -104,10 +116,10 @@ The parameters in the config file will override command-line arguments for locat
    [GPS Status & Toolbox](https://play.google.com/store/apps/details?id=com.eclipsimgpsstatus2)
  - IPHONE
 
-   ```
+```
    For iPhone (iOS)
    iPhones are more restrictive, but we can still test:
-   ```
+```
    [GNSS View](https://apps.apple.com/us/app/gnss-view/id1470130467)
 
    Satellite info, fix status, sky view
@@ -163,7 +175,7 @@ The parameters in the config file will override command-line arguments for locat
 
 - Check system status:
 
-  ```bash
+```bash
   python3 src/main.py status
   ```
 
@@ -176,7 +188,7 @@ The parameters in the config file will override command-line arguments for locat
 - Logs are saved to `/home/erez/gnss-simulator/logs/gnss-simulator.log` by default.
 - To enable auto-start of the simulator service:
 
-  ```bash
+```bash
   sudo systemctl enable gnss-simulator
   sudo systemctl start gnss-simulator
   ```
