@@ -129,7 +129,7 @@ echo "Applying system optimizations..."
 
 # CPU performance mode
 echo 'GOVERNOR="performance"' | sudo tee /etc/default/cpufrequtils > /dev/null
-sudo systemctl enable cpufrequtils
+#sudo systemctl enable cpufrequtils
 
 # Increase USB memory
 if ! grep -q "usbcore.usbfs_memory_mb" /boot/firmware/cmdline.txt; then
