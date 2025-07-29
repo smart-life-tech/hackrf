@@ -96,8 +96,14 @@ class GNSSSignalGenerator:
         Returns:
             Path to the latest ephemeris file or None if not found
         """
-        nav_files = list(self.config_dir.glob("*.n")) + list(self.config_dir.glob("*.nav"))
+        # Support .n, .25n, .yyYn, and .nav naming
+        patterns = ["*.n", "*.nav", "*.??n", "*.???n"]
         
+        nav_files = []
+        for pattern in patterns:
+            nav_files.extend(self.config_dir.glob(pattern))
+            #nav_files = list(self.config_dir.glob("*.n")) + list(self.config_dir.glob("*.nav"))
+            
         if not nav_files:
             self.logger.warning("No ephemeris files found in data directory")
             return None
