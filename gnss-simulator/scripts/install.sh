@@ -236,4 +236,3 @@ echo "To enable auto-start:"
 echo "sudo systemctl enable gnss-simulator"
 echo "sudo systemctl start gnss-simulator"
 echo
-EOF
