@@ -76,7 +76,8 @@ pip3 install --user -r requirements.txt --break-system-packages
 echo "Downloading sample GNSS data..."
 cd /home/erez/gnss-data
 if [ ! -f "brdc3540.14n" ]; then
-    wget -q https://raw.githubusercontent.com/osqzss/gps-sdr-sim/master/brdc3540.14n
+    echo "not existing Downloading sample GNSS data..."
+    wget -q https://github.com/Nuand/gps-sdr-sim/blob/master/brdc3540.14n
     echo "Sample GNSS data downloaded"
 fi
 
