@@ -70,7 +70,7 @@ sudo udevadm trigger
 # Install Python dependencies
 echo "Installing Python dependencies..."
 cd "$(dirname "$0")/.."  # Go to project root
-pip3 install --user -r requirements.txt
+pip3 install --user -r requirements.txt --break-system-packages
 
 # Download sample GNSS data
 echo "Downloading sample GNSS data..."
