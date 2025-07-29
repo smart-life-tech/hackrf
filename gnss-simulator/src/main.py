@@ -82,8 +82,8 @@ Examples:
     parser.add_argument('--port', type=int, default=8000, help='API server port (default: 8000)')
     
     # Configuration
-    parser.add_argument('--config-dir', default='/home/pi/gnss-data', help='GNSS data directory')
-    parser.add_argument('--gps-sdr-sim', default='/home/pi/gps-sdr-sim/gps-sdr-sim', help='GPS-SDR-SIM executable path')
+    parser.add_argument('--config-dir', default='/home/erez/gnss-data', help='GNSS data directory')
+    parser.add_argument('--gps-sdr-sim', default='/home/erez/gps-sdr-sim/gps-sdr-sim', help='GPS-SDR-SIM executable path')
     parser.add_argument('--log-level', choices=['DEBUG', 'INFO', 'WARNING', 'ERROR'], default='INFO', help='Log level')
     parser.add_argument('--log-file', help='Log file path (default: console only)')
     
