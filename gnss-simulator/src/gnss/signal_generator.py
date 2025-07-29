@@ -39,8 +39,8 @@ class GNSSSignalGenerator:
     for laboratory testing and GNSS receiver development.
     """
     
-    def __init__(self, config_dir: str = "/home/pi/gnss-data", 
-                 gps_sdr_sim_path: str = "/home/pi/gps-sdr-sim/gps-sdr-sim"):
+    def __init__(self, config_dir: str = "/home/erez/gnss-data", 
+                 gps_sdr_sim_path: str = "/home/erez/gps-sdr-sim/gps-sdr-sim"):
         """
         Initialize the GNSS Signal Generator
         
