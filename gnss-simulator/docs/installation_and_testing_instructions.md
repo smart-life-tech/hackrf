@@ -108,7 +108,7 @@ python3 src/main.py test --config-file config.json
 ```bash
     python3 src/main.py test --config-file config.json
   ```
-
+![transmitter](<Screenshot (468).png>)
 - Confirm console output shows signal transmission started and runs for the specified duration.
 - Use a GPS test app on Android or iPhone to verify:
  - ANDROID
