@@ -123,7 +123,11 @@ class GNSSSignalGenerator:
             # CDDIS FTP URL for current broadcast ephemeris
             filename = f"brdc{doy:03d}0.{year}n"
             url = f"ftp://cddis.gsfc.nasa.gov/gnss/data/daily/{today.year}/brdc/{filename}.Z"
-            
+            # today = datetime.datetime.utcnow()
+            # year = today.year
+            # doy = today.timetuple().tm_yday
+            file_name = f"brdc{doy:03d}0.{str(year)[-2:]}n.Z"
+            url = f"https://cddis.nasa.gov/archive/gnss/data/daily/{year}/{doy:03d}/brdc/{file_name}"
             output_file = self.config_dir / filename
             compressed_file = self.config_dir / f"{filename}.Z"
             
