@@ -225,7 +225,7 @@ class GNSSSignalGenerator:
             self.logger.info(f"Signal file generated successfully: {output_path} ({file_size_mb:.1f} MB)")
             
             #return True, output_path
-            return True, "/home/erez/gps-sdr-sim/ramat_gan_moving.bin"
+            return True, "/home/erez/gps-sdr-sim/ramat_gan_nearby.bin"
             
         except subprocess.TimeoutExpired:
             self.logger.error("GPS-SDR-SIM timeout - signal generation took too long")
