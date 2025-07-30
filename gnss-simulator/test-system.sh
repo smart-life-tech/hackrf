@@ -16,7 +16,7 @@ else
 fi
 
 echo "3. Testing GNSS data..."
-if ls /home/erez/gnss-data/*.n > /dev/null 2>&1; then
+if ls /home/erez/gnss-data/*.25n > /dev/null 2>&1; then
     echo "✓ GNSS data available"
 else
     echo "✗ GNSS data missing"
