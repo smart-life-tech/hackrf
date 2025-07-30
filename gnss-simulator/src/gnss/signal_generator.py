@@ -212,8 +212,8 @@ class GNSSSignalGenerator:
             
             if result.returncode != 0:
                 self.logger.error(f"GPS-SDR-SIM failed: {result.stderr}")
-                if os.path.exists(output_path):
-                    os.unlink(output_path)
+                # if os.path.exists(output_path):
+                #     os.unlink(output_path)
                 return False, result.stderr
                 
             # Verify output file
@@ -225,7 +225,7 @@ class GNSSSignalGenerator:
             self.logger.info(f"Signal file generated successfully: {output_path} ({file_size_mb:.1f} MB)")
             
             #return True, output_path
-            return True, "/home/erez/gps-sdr-sim/ramat_gan_correct.bin"
+            return True, "/home/erez/gps-sdr-sim/ramat_gan_moving.bin"
             
         except subprocess.TimeoutExpired:
             self.logger.error("GPS-SDR-SIM timeout - signal generation took too long")
@@ -327,8 +327,8 @@ class GNSSSignalGenerator:
             self.transmission_process = None
             
             # Clean up signal file
-            if hasattr(self, 'signal_file') and os.path.exists(self.signal_file):
-                os.unlink(self.signal_file)
+            # if hasattr(self, 'signal_file') and os.path.exists(self.signal_file):
+            #     os.unlink(self.signal_file)
                 
             self.logger.info("GNSS signal transmission stopped")
             return True
