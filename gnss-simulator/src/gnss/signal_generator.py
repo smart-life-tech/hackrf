@@ -222,7 +222,8 @@ class GNSSSignalGenerator:
             file_size_mb = os.path.getsize(output_path) / (1024 * 1024)
             self.logger.info(f"Signal file generated successfully: {output_path} ({file_size_mb:.1f} MB)")
             
-            return True, output_path
+            #return True, output_path
+            return True, "/home/erez/gnss_simulator/gps-sdr-sim/gps_signal.bin"
             
         except subprocess.TimeoutExpired:
             self.logger.error("GPS-SDR-SIM timeout - signal generation took too long")
