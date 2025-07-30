@@ -7,7 +7,7 @@
    The installation script `install.sh` sets up the environment on a Raspberry Pi 5 with HackRF One. It installs dependencies, builds GPS-SDR-SIM, sets permissions, and creates helper scripts.
 
    ```bash
-   cd gnss-simulator/scripts
+   cd johnFirmware/hackrf/gnss-simulator/
    ./install.sh
    ```
 
@@ -16,6 +16,7 @@
    After installation, reboot to apply system changes:
 
    ```bash
+   
    sudo reboot
    ```
 
@@ -28,6 +29,7 @@
    Run the system test script to verify hardware and software setup:
 
    ```bash
+     cd johnFirmware/hackrf/gnss-simulator/
    ./test-system.sh
    ```
 
@@ -36,6 +38,7 @@
    Use the quick start script to run a fixed position test (London coordinates):
 
    ```bash
+     cd johnFirmware/hackrf/gnss-simulator/
    ./quick-start.sh
    ```
 
@@ -44,6 +47,7 @@
    To start the FastAPI server for API-driven simulation:
 
    ```bash
+     cd johnFirmware/hackrf/gnss-simulator/
    python3 src/main.py server --host 0.0.0.0 --port 8000
    ```
 
@@ -80,11 +84,12 @@ Example config file (`config.json`):
 To run the test command using the config file:
 
 ```bash
+  cd johnFirmware/hackrf/gnss-simulator/
 python3 src/main.py test --config-file config.json
 ```
 ![image](image.png)
 ```bash
-   
+     cd johnFirmware/hackrf/gnss-simulator/
    python validation/signal_validator.py comprehensive --file output/gpssim.bin --duration 60
   ```
 
@@ -106,6 +111,7 @@ python3 src/main.py test --config-file config.json
    ```
 
 ```bash
+     cd johnFirmware/hackrf/gnss-simulator/
     python3 src/main.py test --config-file config.json
   ```
 ![transmitter](<Screenshot (468).png>)
