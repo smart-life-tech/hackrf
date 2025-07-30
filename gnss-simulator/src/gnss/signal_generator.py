@@ -134,8 +134,9 @@ class GNSSSignalGenerator:
             # doy = today.timetuple().tm_yday
             file_name = f"brdc{doy:03d}0.{str(year)[-2:]}n.Z"
             url = f"https://cddis.nasa.gov/archive/gnss/data/daily/{year}/{doy:03d}/brdc/{file_name}"
+            url =  f"https://cddis.nasa.gov/archive/gnss/data/daily/2025/211/25n/brdc2110.25n.gz"
             output_file = self.config_dir / filename
-            compressed_file = self.config_dir / f"{filename}.Z"
+            compressed_file = self.config_dir / f"{filename}"
             
             self.logger.info(f"Downloading ephemeris data from {url}")
 
@@ -146,9 +147,10 @@ class GNSSSignalGenerator:
             if result.returncode != 0:
                 self.logger.error(f"Download failed: {result.stderr}")
                 return None
-
+            gz_file = self.config_dir / f"{filename}.gz"
             # Decompress using 'uncompress' for .Z files
             decompress_cmd = ['uncompress', str('/home/erez/gnss-data/brdc1800.25n.Z')]
+            decompress_cmd = ['gunzip', '-f', str(gz_file)]
             result = subprocess.run(decompress_cmd, capture_output=True, text=True, timeout=30)
 
             if result.returncode != 0:
@@ -223,7 +225,7 @@ class GNSSSignalGenerator:
             self.logger.info(f"Signal file generated successfully: {output_path} ({file_size_mb:.1f} MB)")
             
             #return True, output_path
-            return True, "/home/erez/gnss_simulator/gps-sdr-sim/gps_signal.bin"
+            return True, "/home/erez/gps-sdr-sim/ramat_gan_15min.bin"
             
         except subprocess.TimeoutExpired:
             self.logger.error("GPS-SDR-SIM timeout - signal generation took too long")
@@ -261,6 +263,7 @@ class GNSSSignalGenerator:
                 '-s', str(config.sample_rate),
                 '-a', str(config.power_level),
                 '-x', str(config.tx_gain),
+                '-a', str(1),
                 '-R'  # Repeat transmission
             ]
             
