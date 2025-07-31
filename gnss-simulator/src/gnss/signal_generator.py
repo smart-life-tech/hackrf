@@ -138,7 +138,7 @@ class GNSSSignalGenerator:
             output_file = self.config_dir / filename
             compressed_file = self.config_dir / f"{filename}"
             
-            self.logger.info(f"Downloading ephemeris data from {url}")
+            self.logger.info(f"Downloading ephemeris data from {url},{compressed_file}")
 
             # Download compressed file (.Z format)
             download_cmd = ['wget', '-O', str(compressed_file), url]
@@ -148,6 +148,7 @@ class GNSSSignalGenerator:
                 self.logger.error(f"Download failed: {result.stderr}")
                 return None
             gz_file = self.config_dir / f"{filename}.gz"
+            print(gz_file)
             # Decompress using 'uncompress' for .Z files
             decompress_cmd = ['uncompress', str('/home/erez/gnss-data/brdc1800.25n.Z')]
             decompress_cmd = ['gunzip', '-f', str(gz_file)]
