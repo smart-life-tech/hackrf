@@ -249,7 +249,7 @@ class GNSSSignalGenerator:
             return False
             
         # Generate signal file
-        success, signal_file = True, "/home/erez/gps-sdr-sim/ramat_gan_nearby.bin" #self.generate_signal_file(config)
+        success, signal_file = self.generate_signal_file(config) #True, "/home/erez/gps-sdr-sim/ramat_gan_nearby.bin" 
         if not success:
             self.logger.error(f"Failed to generate signal file: {signal_file}")
             return False
