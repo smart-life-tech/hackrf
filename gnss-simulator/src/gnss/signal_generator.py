@@ -182,7 +182,7 @@ class GNSSSignalGenerator:
         """
         try:
             # Get ephemeris file
-            ephemeris_file = config.ephemeris_file or self.get_latest_ephemeris_file()
+            ephemeris_file = '/home/erez/johnFirmware/hackrf/gnss-simulator/brdc2120.25n'#config.ephemeris_file or self.get_latest_ephemeris_file()
             
             if not ephemeris_file:
                 # Try to download current data
