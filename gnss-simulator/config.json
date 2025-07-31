@@ -2,7 +2,7 @@
   "signal": {
     "location": [51.5074, -0.1278, 100],
     "duration": 60,
-    "gain": 30
+    "gain": 40
   },
   "data": {
     "rinex_directory": "/home/erez/gnss-data",

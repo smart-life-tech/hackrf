@@ -224,8 +224,8 @@ class GNSSSignalGenerator:
             file_size_mb = os.path.getsize(output_path) / (1024 * 1024)
             self.logger.info(f"Signal file generated successfully: {output_path} ({file_size_mb:.1f} MB)")
             
-            #return True, output_path
-            return True, "/home/erez/gps-sdr-sim/ramat_gan_nearby.bin"
+            return True, output_path
+            #return True, "/home/erez/gps-sdr-sim/ramat_gan_nearby.bin"
             
         except subprocess.TimeoutExpired:
             self.logger.error("GPS-SDR-SIM timeout - signal generation took too long")
@@ -263,7 +263,6 @@ class GNSSSignalGenerator:
                 '-s', str(config.sample_rate),
                 '-a', str(config.power_level),
                 '-x', str(config.tx_gain),
-                '-a', str(1),
                 '-R'  # Repeat transmission
             ]
             
