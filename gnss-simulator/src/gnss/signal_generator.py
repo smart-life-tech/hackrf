@@ -138,7 +138,7 @@ class GNSSSignalGenerator:
             output_file = self.config_dir / filename
             compressed_file = self.config_dir / f"{filename}"
             
-            self.logger.info(f"Downloading ephemeris data from {url},{compressed_file}")
+            self.logger.info(f"Downloading ephemeris data from {url}")
 
             # Download compressed file (.Z format)
             download_cmd = ['wget', '-O', str(compressed_file), url]
@@ -148,7 +148,6 @@ class GNSSSignalGenerator:
                 self.logger.error(f"Download failed: {result.stderr}")
                 return None
             gz_file = self.config_dir / f"{filename}.gz"
-            print(gz_file)
             # Decompress using 'uncompress' for .Z files
             decompress_cmd = ['uncompress', str('/home/erez/gnss-data/brdc1800.25n.Z')]
             decompress_cmd = ['gunzip', '-f', str(gz_file)]
@@ -183,7 +182,7 @@ class GNSSSignalGenerator:
         """
         try:
             # Get ephemeris file
-            ephemeris_file = False#config.ephemeris_file or self.get_latest_ephemeris_file()
+            ephemeris_file = config.ephemeris_file or self.get_latest_ephemeris_file()
             
             if not ephemeris_file:
                 # Try to download current data
@@ -225,8 +224,8 @@ class GNSSSignalGenerator:
             file_size_mb = os.path.getsize(output_path) / (1024 * 1024)
             self.logger.info(f"Signal file generated successfully: {output_path} ({file_size_mb:.1f} MB)")
             
-            return True, output_path
-            #return True, "/home/erez/gps-sdr-sim/ramat_gan_nearby.bin"
+            #return True, output_path
+            return True, "/home/erez/gps-sdr-sim/ramat_gan_nearby.bin"
             
         except subprocess.TimeoutExpired:
             self.logger.error("GPS-SDR-SIM timeout - signal generation took too long")
@@ -250,7 +249,7 @@ class GNSSSignalGenerator:
             return False
             
         # Generate signal file
-        success, signal_file = self.generate_signal_file(config) #True, "/home/erez/gps-sdr-sim/ramat_gan_nearby.bin" 
+        success, signal_file = True, "/home/erez/gps-sdr-sim/ramat_gan_nearby.bin" #self.generate_signal_file(config)
         if not success:
             self.logger.error(f"Failed to generate signal file: {signal_file}")
             return False
