@@ -47,16 +47,16 @@ def main():
         epilog="""
 Examples:
   # Start API server
-  python main.py server
+  python src/main.py server
 
   # Test signal generation (London)  
-  python main.py test --lat 51.5074 --lon -0.1278
+  python src/main.py test --lat 51.5074 --lon -0.1278
 
   # Generate signal file only
-  python main.py generate --lat 40.7128 --lon -74.0060 --duration 300
+  python src/main.py generate --lat 40.7128 --lon -74.0060 --duration 300
 
   # Check system status
-  python main.py status
+  python src/main.py status
         """
     )
     
@@ -210,12 +210,12 @@ Examples:
             print(f"Location: {latitude}, {longitude}, {altitude}m")
             print(f"Duration: {duration} seconds")
             
-            # success, result = generator.generate_signal_file(config)
-            # if success:
-            #     print(f"✓ Signal file generated: {result}")
-            # else:
-            #     print(f"✗ Generation failed: {result}")
-            #     sys.exit(1)
+            success, result = generator.generate_signal_file(config)
+            if success:
+                print(f"✓ Signal file generated: {result}")
+            else:
+                print(f"✗ Generation failed: {result}")
+                sys.exit(1)
                 
         elif args.command == 'server':
             # Start FastAPI server
