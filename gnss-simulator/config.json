@@ -5,7 +5,7 @@
     "gain": 40
   },
   "data": {
-    "rinex_directory": "/home/erez/gnss-data",
-    "rinex_filename": "brdc1800.25n"
+    "rinex_directory": "/home/erez/johnFirmware/hackrf/gnss-simulator",
+    "rinex_filename": "brdc2120.25n"
   }
 }
