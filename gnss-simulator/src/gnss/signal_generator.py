@@ -205,7 +205,7 @@ class GNSSSignalGenerator:
                 
             # Create temporary output file
             output_file = "/home/erez/johnFirmware/hackrf/gnss-simulator/gpssim.bin"#tempfile.NamedTemporaryFile(suffix='.bin', delete=False)
-            output_path = "/home/erez/johnFirmware/hackrf/gnss-simulator/"#output_file.name
+            output_path = "/home/erez/johnFirmware/hackrf/gnss-simulator/gpssim.bin"#output_file.name
             #output_file.close()
             # Get current time in UTC formatted for gps-sdr-sim
             now_utc = time.gmtime()
