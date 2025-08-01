@@ -216,7 +216,7 @@ class GNSSSignalGenerator:
                 '-e', ephemeris_file,
                 '-l', f"{config.latitude},{config.longitude},{config.altitude}",
                 '-d', str(config.duration),
-                
+                '-o', output_path,
                 '-t', t_param,
                 '-b', str(8)
             ]
