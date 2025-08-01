@@ -127,32 +127,19 @@ class GNSSSignalGenerator:
             year = today.strftime("%y")
             
             # CDDIS FTP URL for current broadcast ephemeris
-            filename = f"brdc{doy:03d}0.{year}n.gz"
-            #url = f"ftp://cddis.gsfc.nasa.gov/gnss/data/daily/{today.year}/brdc/{filename}.Z"
-            # today = datetime.datetime.utcnow()
-            # year = today.year
-            # doy = today.timetuple().tm_yday
-            #file_name = f"brdc{doy:03d}0.{str(year)[-2:]}n.Z"
-            url = f"https://cddis.nasa.gov/archive/gnss/data/daily/{year}/{doy:03d}/{filename}"
-            #url =  f"https://cddis.nasa.gov/archive/gnss/data/daily/2025/211/25n/brdc2110.25n.gz"
-            output_file = self.config_dir / filename
-            compressed_file = self.config_dir / f"{filename}"
-            
-            self.logger.info(f"Downloading ephemeris data from {url}")
+            today = datetime.datetime.utcnow()
+            doy = today.timetuple().tm_yday
+            year_full = today.year
+            year_short = today.strftime("%y")
 
-            # Download compressed file (.Z format)
-            download_cmd = ['wget', '-O', str(compressed_file), url]
+            filename = f"brdc{doy:03d}0.{year_short}n.gz"
+            url = f"https://cddis.nasa.gov/archive/gnss/data/daily/{year_full}/{doy:03d}/25n/{filename}"
+            output_path = self.config_dir / filename
+
+            # Download using curl with .netrc authentication
+            download_cmd = ['curl', '-n', '-L', '-o', str(output_path), url]
             result = subprocess.run(download_cmd, capture_output=True, text=True, timeout=60)
-
-            if result.returncode != 0:
-                self.logger.error(f"Download failed: {result.stderr}")
-                return None
-            gz_file = self.config_dir / f"{filename}"
-            # Decompress using 'uncompress' for .Z files
-            decompress_cmd = ['uncompress', str('/home/erez/gnss-data/brdc1800.25n.Z')]
-            decompress_cmd = ['gunzip', '-f', str(gz_file)]
-            result = subprocess.run(decompress_cmd, capture_output=True, text=True, timeout=30)
-
+            output_file = self.config_dir / filename
             if result.returncode != 0:
                 self.logger.error(f"Decompression failed: {result.stderr}")
                 return None
