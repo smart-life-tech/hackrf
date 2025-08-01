@@ -215,7 +215,7 @@ class GNSSSignalGenerator:
                 str(self.gps_sdr_sim_path),
                 '-e', ephemeris_file,
                 '-l', f"{config.latitude},{config.longitude},{config.altitude}",
-                '-s', '2500000',
+                '-s', '2600000',
                 '-b', str(8)
             ]
             
