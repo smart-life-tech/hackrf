@@ -138,7 +138,17 @@ class GNSSSignalGenerator:
             print(url,output_path)
 
             # Download using curl with .netrc authentication
-            download_cmd = ['curl', '-n', '-L', '-o', str(output_path), url]
+            #download_cmd = ['curl', '-n', '-L', '-o', str(output_path), url]
+            download_cmd = [
+                'curl',
+                '-n',  # use .netrc
+                '-c', str(self.config_dir / 'cookies.txt'),  # save cookies
+                '-b', str(self.config_dir / 'cookies.txt'),  # send cookies
+                '-L',  # follow redirects
+                '-o', str(output_path),  # output file
+                url
+            ]
+
             result = subprocess.run(download_cmd, capture_output=True, text=True, timeout=60)
             output_file = self.config_dir / filename
             if result.returncode != 0:
