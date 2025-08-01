@@ -204,7 +204,7 @@ class GNSSSignalGenerator:
                 return False, "No ephemeris data available"
                 
             # Create temporary output file
-            output_file = tempfile.NamedTemporaryFile(suffix='.bin', delete=False)
+            output_file = '/home/erez/johnFirmware/hackrf/'#tempfile.NamedTemporaryFile(suffix='.bin', delete=False)
             output_path = output_file.name
             output_file.close()
             # Get current time in UTC formatted for gps-sdr-sim
@@ -241,7 +241,7 @@ class GNSSSignalGenerator:
             self.logger.info(f"Signal file generated successfully: {output_path} ({file_size_mb:.1f} MB)")
             
             #return True, output_path
-            return True, "/johnFirmware/hackrf/gnss-simulator/gpssim.bin"
+            return True, "/home/erez/johnFirmware/hackrf/gnss-simulator/gpssim.bin"
             
         except subprocess.TimeoutExpired:
             self.logger.error("GPS-SDR-SIM timeout - signal generation took too long")
