@@ -6,6 +6,7 @@ This module handles GPS signal generation using GPS-SDR-SIM and HackRF One.
 It provides a Python interface for generating and transmitting GNSS signals.
 """
 
+from datetime import datetime, timezone
 import os
 import sys
 import subprocess
@@ -206,7 +207,9 @@ class GNSSSignalGenerator:
             output_file = tempfile.NamedTemporaryFile(suffix='.bin', delete=False)
             output_path = output_file.name
             output_file.close()
-            
+            # Get current time in UTC formatted for gps-sdr-sim
+            now_utc = datetime.now(datetime.timezone.utc)
+            t_param = now_utc.strftime('%Y/%m/%d,%H:%M:%S')
             # Build GPS-SDR-SIM command
             cmd = [
                 str(self.gps_sdr_sim_path),
@@ -214,7 +217,7 @@ class GNSSSignalGenerator:
                 '-l', f"{config.latitude},{config.longitude},{config.altitude}",
                 '-d', str(config.duration),
                 '-o', output_path,
-                '-t', 'now'
+                '-t', t_param
             ]
             
             self.logger.info(f"Generating signal file with command: {' '.join(cmd)}")
