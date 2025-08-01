@@ -97,7 +97,7 @@ class GNSSSignalGenerator:
             Path to the latest ephemeris file or None if not found
         """
         # Support .n, .25n, .yyYn, and .nav naming
-        patterns = ["*.n", "*.nav", "*.??n", "*.???n"]
+        patterns = ["*.1n", "*.nav", "*.??1n", "*.???1n"]
         
         nav_files = []
         for pattern in patterns:
@@ -127,14 +127,14 @@ class GNSSSignalGenerator:
             year = today.strftime("%y")
             
             # CDDIS FTP URL for current broadcast ephemeris
-            filename = f"brdc{doy:03d}0.{year}n"
-            url = f"ftp://cddis.gsfc.nasa.gov/gnss/data/daily/{today.year}/brdc/{filename}.Z"
+            filename = f"brdc{doy:03d}0.{year}n.gz"
+            #url = f"ftp://cddis.gsfc.nasa.gov/gnss/data/daily/{today.year}/brdc/{filename}.Z"
             # today = datetime.datetime.utcnow()
             # year = today.year
             # doy = today.timetuple().tm_yday
-            file_name = f"brdc{doy:03d}0.{str(year)[-2:]}n.Z"
-            url = f"https://cddis.nasa.gov/archive/gnss/data/daily/{year}/{doy:03d}/brdc/{file_name}"
-            url =  f"https://cddis.nasa.gov/archive/gnss/data/daily/2025/211/25n/brdc2110.25n.gz"
+            #file_name = f"brdc{doy:03d}0.{str(year)[-2:]}n.Z"
+            url = f"https://cddis.nasa.gov/archive/gnss/data/daily/{year}/{doy:03d}/{filename}"
+            #url =  f"https://cddis.nasa.gov/archive/gnss/data/daily/2025/211/25n/brdc2110.25n.gz"
             output_file = self.config_dir / filename
             compressed_file = self.config_dir / f"{filename}"
             
@@ -147,7 +147,7 @@ class GNSSSignalGenerator:
             if result.returncode != 0:
                 self.logger.error(f"Download failed: {result.stderr}")
                 return None
-            gz_file = self.config_dir / f"{filename}.gz"
+            gz_file = self.config_dir / f"{filename}"
             # Decompress using 'uncompress' for .Z files
             decompress_cmd = ['uncompress', str('/home/erez/gnss-data/brdc1800.25n.Z')]
             decompress_cmd = ['gunzip', '-f', str(gz_file)]
@@ -182,7 +182,7 @@ class GNSSSignalGenerator:
         """
         try:
             # Get ephemeris file
-            ephemeris_file = '/home/erez/johnFirmware/hackrf/gnss-simulator/brdc2120.25n'#config.ephemeris_file or self.get_latest_ephemeris_file()
+            ephemeris_file = config.ephemeris_file or self.get_latest_ephemeris_file() #'/home/erez/johnFirmware/hackrf/gnss-simulator/brdc2120.25n'
             
             if not ephemeris_file:
                 # Try to download current data
