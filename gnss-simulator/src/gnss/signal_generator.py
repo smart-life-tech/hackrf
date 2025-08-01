@@ -158,12 +158,25 @@ class GNSSSignalGenerator:
             # Check if decompressed file exists
             if output_file.exists():
                 self.logger.info(f"Successfully downloaded: {output_file}")
-                return str(output_file)
-            else:
-                self.logger.error("Downloaded file not found after decompression")
-                return None
-
                 
+                # Decompress the .gz file
+                gz_file = output_file
+                decompress_cmd = ['gunzip', '-f', str(gz_file)]
+                result = subprocess.run(decompress_cmd, capture_output=True, text=True, timeout=30)
+
+                if result.returncode != 0:
+                    self.logger.error(f"Decompression failed: {result.stderr}")
+                    return None
+
+                # Return the path to the uncompressed file (remove .gz)
+                uncompressed_file = gz_file.with_suffix('')  # e.g., .gz → ''
+                if uncompressed_file.exists():
+                    self.logger.info(f"Decompressed to: {uncompressed_file}")
+                    return str(uncompressed_file)
+                else:
+                    self.logger.error("Uncompressed file not found after gunzip.")
+                    return None
+      
         except Exception as e:
             self.logger.error(f"Error downloading ephemeris: {e}")
             return None
