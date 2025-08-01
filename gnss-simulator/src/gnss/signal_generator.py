@@ -204,7 +204,7 @@ class GNSSSignalGenerator:
                 return False, "No ephemeris data available"
                 
             # Create temporary output file
-            output_file = '/home/erez/johnFirmware/hackrf/'#tempfile.NamedTemporaryFile(suffix='.bin', delete=False)
+            output_file = tempfile.NamedTemporaryFile(suffix='.bin', delete=False)
             output_path = output_file.name
             output_file.close()
             # Get current time in UTC formatted for gps-sdr-sim
@@ -216,7 +216,7 @@ class GNSSSignalGenerator:
                 '-e', ephemeris_file,
                 '-l', f"{config.latitude},{config.longitude},{config.altitude}",
                 '-d', str(config.duration),
-                '-o', output_path,
+                
                 '-t', t_param,
                 '-b', str(8)
             ]
