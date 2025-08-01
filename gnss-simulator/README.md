@@ -88,3 +88,4 @@ gnss-simulator/
 ## License
 
 Open Source - See LICENSE file for details.
+/home/erez/gps-sdr-sim/gps-sdr-sim -e /home/erez/gnss-data/brdc2130.25n  -l 30.286502,120.032669,100 -b 8

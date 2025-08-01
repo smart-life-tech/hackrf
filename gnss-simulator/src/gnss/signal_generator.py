@@ -217,7 +217,8 @@ class GNSSSignalGenerator:
                 '-l', f"{config.latitude},{config.longitude},{config.altitude}",
                 '-d', str(config.duration),
                 '-o', output_path,
-                '-t', t_param
+                '-t', t_param,
+                '-b', str(8)
             ]
             
             self.logger.info(f"Generating signal file with command: {' '.join(cmd)}")
@@ -239,8 +240,8 @@ class GNSSSignalGenerator:
             file_size_mb = os.path.getsize(output_path) / (1024 * 1024)
             self.logger.info(f"Signal file generated successfully: {output_path} ({file_size_mb:.1f} MB)")
             
-            return True, output_path
-            #return True, "/home/erez/gps-sdr-sim/ramat_gan_nearby.bin"
+            #return True, output_path
+            return True, "/johnFirmware/hackrf/gnss-simulator/gpssim.bin"
             
         except subprocess.TimeoutExpired:
             self.logger.error("GPS-SDR-SIM timeout - signal generation took too long")
