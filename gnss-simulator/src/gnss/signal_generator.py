@@ -213,9 +213,7 @@ class GNSSSignalGenerator:
                 '-e', ephemeris_file,
                 '-l', f"{config.latitude},{config.longitude},{config.altitude}",
                 '-d', str(config.duration),
-                '-o', output_path,
-                '-T', '2025/07/31,12:00:00',
-                '-v'
+                '-o', output_path
             ]
             
             self.logger.info(f"Generating signal file with command: {' '.join(cmd)}")
