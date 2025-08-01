@@ -214,7 +214,7 @@ class GNSSSignalGenerator:
                 '-l', f"{config.latitude},{config.longitude},{config.altitude}",
                 '-d', str(config.duration),
                 '-o', output_path,
-                '-t', '2025/08/01,12:00:00'
+                '-t', 'now'
             ]
             
             self.logger.info(f"Generating signal file with command: {' '.join(cmd)}")
