@@ -341,6 +341,9 @@ class GNSSSignalGenerator:
             #     os.unlink(self.signal_file)
                 
             self.logger.info("GNSS signal transmission stopped")
+            # Delete all .bin files in /tmp
+            cleanup_cmd = ['rm', '-f', '/tmp/*.bin']
+            subprocess.run(cleanup_cmd)
             return True
             
         except Exception as e:
