@@ -343,8 +343,8 @@ class GNSSSignalGenerator:
             self.transmission_process = None
             
             # Clean up signal file
-            if hasattr(self, 'signal_file') and os.path.exists(self.signal_file):
-               os.unlink(self.signal_file)
+            # if hasattr(self, 'signal_file') and os.path.exists(self.signal_file):
+            #    os.unlink(self.signal_file)
                 
             self.logger.info("GNSS signal transmission stopped")
             # Delete all .bin files in /tmp
