@@ -208,8 +208,8 @@ class GNSSSignalGenerator:
             output_path = output_file.name
             output_file.close()
             # Get current time in UTC formatted for gps-sdr-sim
-            now_utc = datetime.now(datetime.timezone.utc)
-            t_param = now_utc.strftime('%Y/%m/%d,%H:%M:%S')
+            now_utc = time.gmtime()
+            t_param = time.strftime('%Y/%m/%d,%H:%M:%S', now_utc)
             # Build GPS-SDR-SIM command
             cmd = [
                 str(self.gps_sdr_sim_path),
