@@ -274,7 +274,6 @@ class GNSSSignalGenerator:
                 '-s', str(config.sample_rate),
                 '-a', str(config.power_level),
                 '-x', str(config.tx_gain),
-                '-C', str(-11),
                 '-R'  # Repeat transmission
             ]
             
