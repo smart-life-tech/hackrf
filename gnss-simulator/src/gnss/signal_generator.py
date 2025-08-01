@@ -214,7 +214,7 @@ class GNSSSignalGenerator:
                 '-l', f"{config.latitude},{config.longitude},{config.altitude}",
                 '-d', str(config.duration),
                 '-o', output_path,
-                '-T', 'now'  
+                '-t', 'now'
             ]
             
             self.logger.info(f"Generating signal file with command: {' '.join(cmd)}")
@@ -275,6 +275,7 @@ class GNSSSignalGenerator:
                 '-s', str(config.sample_rate),
                 '-a', str(config.power_level),
                 '-x', str(config.tx_gain),
+                "-c", "-11",
                 '-R'  # Repeat transmission
             ]
             
