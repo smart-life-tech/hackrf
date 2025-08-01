@@ -135,6 +135,7 @@ class GNSSSignalGenerator:
             filename = f"brdc{doy:03d}0.{year_short}n.gz"
             url = f"https://cddis.nasa.gov/archive/gnss/data/daily/{year_full}/{doy:03d}/25n/{filename}"
             output_path = self.config_dir / filename
+            print(url,output_path)
 
             # Download using curl with .netrc authentication
             download_cmd = ['curl', '-n', '-L', '-o', str(output_path), url]
