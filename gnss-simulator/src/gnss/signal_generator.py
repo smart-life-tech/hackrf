@@ -213,7 +213,9 @@ class GNSSSignalGenerator:
                 '-e', ephemeris_file,
                 '-l', f"{config.latitude},{config.longitude},{config.altitude}",
                 '-d', str(config.duration),
-                '-o', output_path
+                '-o', output_path,
+                '-T', '2025/07/31,12:00:00',
+                '-v'
             ]
             
             self.logger.info(f"Generating signal file with command: {' '.join(cmd)}")
@@ -274,7 +276,6 @@ class GNSSSignalGenerator:
                 '-s', str(config.sample_rate),
                 '-a', str(config.power_level),
                 '-x', str(config.tx_gain),
-                
                 '-R'  # Repeat transmission
             ]
             
