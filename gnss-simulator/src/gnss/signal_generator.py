@@ -274,7 +274,7 @@ class GNSSSignalGenerator:
                 '-s', str(config.sample_rate),
                 '-a', str(config.power_level),
                 '-x', str(config.tx_gain),
-                "-T", "2025/07/31,12:00:00",
+                
                 '-R'  # Repeat transmission
             ]
             
