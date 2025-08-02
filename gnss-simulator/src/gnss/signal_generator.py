@@ -29,7 +29,7 @@ class GNSSConfig:
     sample_rate: int = 2600000  # Hz
     frequency: int = 1575420000  # Hz (L1 band)
     tx_gain: int = 40        # HackRF TX gain
-    power_level: int = 1     # Signal power level
+    power_level: int = 0.1     # Signal power level
     ephemeris_file: Optional[str] = None
 
 class GNSSSignalGenerator:
@@ -216,7 +216,8 @@ class GNSSSignalGenerator:
                 '-e', ephemeris_file,
                 '-l', f"{config.latitude},{config.longitude},{config.altitude}",
                 '-s', '2500000',
-                '-b', str(8)
+                '-b', str(8),
+                '-d', str(60)
             ]
             
             self.logger.info(f"Generating signal file with command: {' '.join(cmd)}")
