@@ -280,7 +280,8 @@ class GNSSSignalGenerator:
                 '-x', str(config.tx_gain),
                 "-C", "-11",
                 '-R',  # Repeat transmission
-                '-d', '300'
+                '-p', '1',
+                '-B'
             ]
             
             self.logger.info(f"Starting transmission with command: {' '.join(cmd)}")
