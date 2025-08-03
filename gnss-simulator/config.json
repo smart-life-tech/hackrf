@@ -1,7 +1,7 @@
 {
   "signal": {
     "location": [51.5074, -0.1278, 100],
-    "duration": 60,
+    "duration": 300,
     "gain": 40
   },
   "data": {
