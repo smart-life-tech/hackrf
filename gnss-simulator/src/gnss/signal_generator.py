@@ -215,9 +215,9 @@ class GNSSSignalGenerator:
                 str(self.gps_sdr_sim_path),
                 '-e', ephemeris_file,
                 '-l', f"{config.latitude},{config.longitude},{config.altitude}",
-                '-s', '2500000',
+                '-s', '2600000',
                 '-b', str(8),
-                '-d', str(60)
+
             ]
             
             self.logger.info(f"Generating signal file with command: {' '.join(cmd)}")
@@ -279,7 +279,8 @@ class GNSSSignalGenerator:
                 '-a', str(config.power_level),
                 '-x', str(config.tx_gain),
                 "-C", "-11",
-                '-R'  # Repeat transmission
+                '-R',  # Repeat transmission
+                '-d', '300'
             ]
             
             self.logger.info(f"Starting transmission with command: {' '.join(cmd)}")
